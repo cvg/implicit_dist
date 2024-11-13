@@ -162,7 +162,10 @@ double bundle_adjustment_inner(const std::vector<std::vector<Eigen::Vector2d>> &
     // Setup parameterizations and constant parameter blocks
     for (size_t k = 0; k < n_img; ++k) {
         double *q = qs[k].coeffs().data();
-
+        if (!problem.HasParameterBlock(q)) {
+            std::cout << "q not found for image " << k << std::endl;
+            continue;
+        }
         problem.SetParameterization(q, new ceres::EigenQuaternionParameterization());
 
         if (pointsInd[k].size() != points2D_center[k].size()) {

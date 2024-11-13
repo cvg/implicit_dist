@@ -71,7 +71,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="pyimplicitdist",
-    version="1.0.0",
+    version="1.1.0",
     author="Linfei Pan and Viktor Larsson",
     author_email="linpan@student.ethz.ch, viktor.larsson@math.lth.se",
     description="Camera pose estimation using implicit distortion",

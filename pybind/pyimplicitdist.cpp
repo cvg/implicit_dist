@@ -292,11 +292,11 @@ PYBIND11_MODULE(pyimplicitdist, m)
             .def("__repr__",
                 [](const BundleAdjustmentOptions &a) {
                     return "[max_ite_num: " + std::to_string(a.max_ite_num) + "\n" + +
-                            "min_curr_num: " + std::to_string(a.min_curr_num) + " ]\n"
+                            "min_curr_num: " + std::to_string(a.min_curr_num) + " \n"
                             "stop_ratio: " + std::to_string(a.stop_ratio) + "\n" +
                             "filter_thres: " + std::to_string(a.filter_thres) + "\n" +
                             "upgrade_result: " + std::to_string(a.upgrade_result) + "\n" +
-                            "filter_result: " + std::to_string(a.filter_result) + "\n";
+                            "filter_result: " + std::to_string(a.filter_result) + "\n]";
                 }
             );
 
@@ -308,10 +308,14 @@ PYBIND11_MODULE(pyimplicitdist, m)
 
     py::class_<PoseRefinement1DRadialOptions>(m, "PoseRefinement1DRadialOptions")
             .def(py::init<>())
+            .def_readwrite("optimize_pose", &PoseRefinement1DRadialOptions::optimize_pose)    
+            .def_readwrite("optimize_pp", &PoseRefinement1DRadialOptions::optimize_pp)    
             .def_readwrite("verbose", &PoseRefinement1DRadialOptions::verbose)    
             .def("__repr__",
                 [](const PoseRefinement1DRadialOptions &a) {
-                    return "[verbose: " + std::to_string(a.verbose) + " ]\n";
+                    return "[optimize_pose: " + std::to_string(a.optimize_pose) + "\n" + +
+                            "optimize_pp: " + std::to_string(a.optimize_pp) + " \n"
+                            "verbose: " + std::to_string(a.verbose) + "\n]";
                 }
             );
 
@@ -338,7 +342,7 @@ PYBIND11_MODULE(pyimplicitdist, m)
 
     m.def("filter_result_pose_refinement_multi", &filter_result_pose_refinement_multi_wrapper, py::arg("points2D"), py::arg("points3D"), py::arg("poses"), py::arg("pp"), py::arg("refinement_opt"), "Filtering for pose refinement result", py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());
 
-    m.def("bundle_adjustment", &bundle_adjustment_wrapper, py::arg("points2D"), py::arg("points3D"), py::arg("pointsInd"), py::arg("poses"), py::arg("cost_matrix"), py::arg("cm_opt"), py::arg("pp"), py::arg("ba_opt"), "Bundle adjustment with possible upgraded and filtering", py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());
+    m.def("bundle_adjustment", &bundle_adjustment_wrapper, py::arg("points2D"), py::arg("points3D"), py::arg("pointsInd"), py::arg("cost_matrix"), py::arg("cm_opt"), py::arg("poses"), py::arg("pp"), py::arg("ba_opt"), "Bundle adjustment with possible upgraded and filtering", py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());
 
     m.def("build_cost_matrix", &build_cost_matrix_wrapper, py::arg("points2D"), py::arg("options"), py::arg("pp"), "Constructs the cost matrix for the regularizer.", py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());  
     m.def("build_cost_matrix_multi", &build_cost_matrix_multi_wrapper,py::arg("points2D"), py::arg("options"), py::arg("pp"),  "Constructs the cost matrix for the regularizer.", py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());  

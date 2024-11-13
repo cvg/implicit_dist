@@ -11,6 +11,8 @@ namespace implicit_dist {
     struct PoseRefinement1DRadialOptions {
         bool weight_residuals = true;
         bool verbose = false;
+        bool optimize_pose = true;
+        bool optimize_pp = true;
 
         PoseRefinement1DRadialOptions clone() const {
             PoseRefinement1DRadialOptions copy = *this;

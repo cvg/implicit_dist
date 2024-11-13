@@ -81,6 +81,13 @@ void joint_pose_refinement_1D_radial(const std::vector<std::vector<Eigen::Vector
     
     for (size_t cam_k = 0; cam_k < num_cams; ++cam_k) {
         problem.SetParameterization(qs[cam_k].coeffs().data(), new ceres::EigenQuaternionParameterization());
+        if (!opt.optimize_pose) {
+            problem.SetParameterBlockConstant(qs[cam_k].coeffs().data());
+        }
+    }
+
+    if (!opt.optimize_pp) {
+        problem.SetParameterBlockConstant(pp->data());
     }
 
 
